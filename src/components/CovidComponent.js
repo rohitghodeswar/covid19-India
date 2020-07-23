@@ -15,15 +15,20 @@ const CovidComponent = () => {
   const { covidData, resources, location } = useSelector(
     (state) => state.covidReducer
   );
-  const { state, state_district } = location && location.address;
+  let state, state_district, locationData;
+  if(location){
+    state = location.address.state;
+    state_district = location.address.state_district
+    locationData = [
+      {
+        state,
+        district: state_district,
+      },
+    ];
+  }
 
   const { zones } = useSelector((state) => state.covidZoneReducer);
-  const locationData = [
-    {
-      state,
-      district: state_district,
-    },
-  ];
+  
 
   const dispatch = useDispatch();
 

@@ -97,7 +97,8 @@ const App = () => {
               </AppBar>
             </Grid>
             <Grid item xs={12}>
-              {location && <CovidRouteComponent />}
+              {/* {location && <CovidRouteComponent />} */}
+              <CovidRouteComponent />
             </Grid>
           </Grid>
         </Paper>
