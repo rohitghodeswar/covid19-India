@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   fetchCovidStateWiseAction,
   fetchCovidResourceAction,
-  fetchCovidZoneAction
+  fetchCovidZoneAction,
 } from "../middleware/covid-middleware";
 
 // components
@@ -12,21 +12,23 @@ import CovidCardDetail from "./CovidCardDetail";
 import CovidSearchComponent from "./CovidSearchComponent";
 
 const CovidStateComponent = () => {
-
   const { stateWiseData } = useSelector((state) => state.covidStateWiseReducer);
-  const { resources, location } = useSelector((state) => state.covidReducer);
+  const { resources, location, covidData } = useSelector(
+    (state) => state.covidReducer
+  );
   const { zones } = useSelector((state) => state.covidZoneReducer);
-  
-  let state, state_district, locationData;
-  if(location){
+
+  let state, state_district, locationData, isInState;
+  if (location) {
     state = location.address.state;
-    state_district = location.address.state_district
+    state_district = location.address.state_district;
     locationData = [
       {
         state,
         district: state_district,
       },
     ];
+    isInState = covidData.some((data) => data.state === state);
   }
 
   const dispatch = useDispatch();
@@ -39,7 +41,8 @@ const CovidStateComponent = () => {
 
   return (
     <React.Fragment>
-      {locationData &&
+      {isInState &&
+        locationData &&
         locationData.length > 0 &&
         stateWiseData &&
         stateWiseData.length > 0 &&

@@ -15,20 +15,20 @@ const CovidComponent = () => {
   const { covidData, resources, location } = useSelector(
     (state) => state.covidReducer
   );
-  let state, state_district, locationData;
-  if(location){
+  let state, state_district, locationData, isInState;
+  if (location) {
     state = location.address.state;
-    state_district = location.address.state_district
+    state_district = location.address.state_district;
     locationData = [
       {
         state,
         district: state_district,
       },
     ];
+    isInState = covidData.some((data) => data.state === state);
   }
-
-  const { zones } = useSelector((state) => state.covidZoneReducer);
   
+  const { zones } = useSelector((state) => state.covidZoneReducer);
 
   const dispatch = useDispatch();
 
@@ -39,7 +39,8 @@ const CovidComponent = () => {
   }, [dispatch]);
   return (
     <React.Fragment>
-      {locationData &&
+      {isInState &&
+        locationData &&
         locationData.length > 0 &&
         covidData &&
         covidData.length > 0 &&
