@@ -94,6 +94,9 @@ const CovidCardDetail = ({ locationData, covidData, resources, cardType }) => {
                 max={cityData[0] && cityData[0].confirmed}
                 value={cityData[0] && cityData[0].active}
                 styleColor="red"
+                delta={cityData[0].delta && cityData[0].delta.confirmed
+                  ? cityData[0].delta.confirmed
+                  : cityData[0].deltaconfirmed}
               />
               <ProgressComponent
                 labelText="Recovered"
@@ -102,6 +105,10 @@ const CovidCardDetail = ({ locationData, covidData, resources, cardType }) => {
                 max={cityData[0] && cityData[0].confirmed}
                 value={cityData[0] && cityData[0].recovered}
                 styleColor="green"
+                delta={cityData[0].delta && cityData[0].delta.recovered
+                  ? cityData[0].delta.recovered
+                  : cityData[0].deltarecovered}
+
               />
               <ProgressComponent
                 labelText="Deaths"
@@ -114,6 +121,9 @@ const CovidCardDetail = ({ locationData, covidData, resources, cardType }) => {
                     : cityData[0].deaths
                 }
                 styleColor="grey"
+                delta={cityData[0].delta && cityData[0].delta.deceased
+                  ? cityData[0].delta.deceased
+                  : cityData[0].deltadeaths}
               />
             </CardContent>
             {categories && selectedCityCategories && cardType !== "india" && (
