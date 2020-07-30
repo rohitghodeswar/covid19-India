@@ -9,7 +9,9 @@ import {
   GET_COVID_ZONE_REQUEST,
   GET_COVID_ZONE_SUCCESS,
   GET_COVID_STATEWISE_REQUEST,
-  GET_COVID_STATEWISE_SUCCESS
+  GET_COVID_STATEWISE_SUCCESS,
+  GET_COVID_LOADING_REQUEST,
+  GET_COVID_LOADING_SUCCESS,
 } from "../constants/action-types";
 
 export const getCurrentLocation = (data) => ({
@@ -52,3 +54,10 @@ export const getCovidStateWiseSuccess = (data) => ({
   type: GET_COVID_STATEWISE_SUCCESS,
   payload: data,
 });
+
+export const getLoadingRequest = () => ({
+  type: GET_COVID_LOADING_REQUEST
+})
+export const getLoadingSuccess = () => ({
+  type: GET_COVID_LOADING_SUCCESS
+})

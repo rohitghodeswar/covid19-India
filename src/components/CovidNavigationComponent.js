@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Link, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
@@ -11,10 +11,6 @@ import LocationCityIcon from "@material-ui/icons/LocationCity";
 import AllOutIcon from "@material-ui/icons/AllOut";
 import PublicIcon from "@material-ui/icons/Public";
 
-import CovidComponent from "./CovidComponent";
-import CovidStateComponent from "./CovidStateComponent";
-import CovidIndiaComponent from "./CovidIndiaComponent";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -24,34 +20,19 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     maxHeight: "70px",
-    marginBottom: "5px"
-  },
-  title: {
-    flexGrow: 2,
-  },
-  paper: {
-    padding: 10,
-    width: "100%",
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: "100%",
-  },
-  tabLinks: {
-    // minWidth: "150px",
+    marginBottom: "10px",
   },
 }));
 
-const CovidRouteComponent = () => {
+const CovidNavigationComponent = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState("districts");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <React.Fragment>
       <AppBar position="sticky" color="inherit" className={classes.appBar}>
         <BottomNavigation
           showLabels
@@ -82,15 +63,7 @@ const CovidRouteComponent = () => {
           />
         </BottomNavigation>
       </AppBar>
-
-      <Switch>
-        <Route path="/" exact component={CovidComponent} />
-        <Route path="/states" component={CovidStateComponent} />
-        <Route path="/india" component={CovidIndiaComponent} />
-
-      </Switch>
-    </React.Fragment>
   );
 };
 
-export default CovidRouteComponent;
+export default CovidNavigationComponent;

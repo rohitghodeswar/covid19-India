@@ -12,11 +12,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
 
-import CovidRouteComponent from "./components/CovidRouteComponent";
+// components
+import CovidRouteComponent from "./routes/CovidRouteComponent";
+import CovidNavigationComponent from "./components/CovidNavigationComponent";
 
 //utils
-import { usePosition } from "use-position";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   rootPaper: {
     boxShadow: "none",
+    padding: "5px",
   },
   search: {
     position: "relative",
@@ -49,10 +51,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { location } = useSelector((state) => state.covidReducer);
   const [darkState, setDarkState] = useState(false);
-  const watch = true;
-  const { latitude, longitude } = usePosition(watch);
 
   const palletType = darkState ? "dark" : "light";
   const theme = createMuiTheme({
@@ -65,19 +64,44 @@ const App = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `https://us1.locationiq.com/v1/reverse.php?key=86272126cb2b4c&lat=${latitude}&lon="${longitude}&format=json`
-      );
+    const fetchData = async (latitude, longitude) => {
       dispatch({
-        type: "GET_CURRENT_LOCATION",
-        payload: response.data,
+        type: "GET_COVID_LOADING_REQUEST",
       });
+      const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude},${longitude}&key=63a872e5fe20495c9ee636dbd2207aff`;
+      const response = await axios.get(url);
+      if (response.data) {
+        const { components } = response.data.results[0];
+        const location = [
+          {
+            state: components.state,
+            district: components.state_district,
+            country: components.country,
+          },
+        ];
+        dispatch({
+          type: "GET_CURRENT_LOCATION",
+          payload: location,
+        });
+        dispatch({
+          type: "GET_COVID_LOADING_SUCCESS",
+        });
+      }
     };
-    if (latitude && longitude) {
-      fetchData();
+
+    const success = (pos) => {
+      if (pos && pos.coords) {
+        const { latitude, longitude } = pos.coords;
+        fetchData(latitude, longitude);
+      }
+    };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success);
+    } else {
+      alert("Geolocation is not supported by this browser.");
     }
-  }, [dispatch, latitude, longitude]);
+  }, [dispatch]);
 
   return (
     <Router>
@@ -88,7 +112,7 @@ const App = () => {
               <AppBar position="static">
                 <Toolbar>
                   <Typography className={classes.title} variant="h6" noWrap>
-                    COVID-19
+                    COVID-19 INDIA
                   </Typography>
                   <div className={classes.search}>
                     <Switch checked={darkState} onChange={handleThemeChange} />
@@ -97,7 +121,7 @@ const App = () => {
               </AppBar>
             </Grid>
             <Grid item xs={12}>
-              {/* {location && <CovidRouteComponent />} */}
+              <CovidNavigationComponent />
               <CovidRouteComponent />
             </Grid>
           </Grid>

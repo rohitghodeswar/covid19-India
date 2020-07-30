@@ -7,7 +7,6 @@ import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 
 const ProgressComponent = ({
   labelText,
-  cityData,
   max,
   min,
   value,
@@ -17,7 +16,7 @@ const ProgressComponent = ({
   const BorderLinearProgress = withStyles((theme) => ({
     root: {
       height: 10,
-      borderRadius: 0,
+      borderRadius: 20,
     },
     colorPrimary: {
       backgroundColor:
@@ -25,21 +24,21 @@ const ProgressComponent = ({
     },
     bar: {
       borderRadius: 0,
-      backgroundColor: `${styleColor}`,
+      backgroundColor: `light${styleColor}`,
     },
   }))(LinearProgress);
 
   const useStyles = makeStyles({
     root: {
       flexGrow: 1,
-      marginBottom: "10px",
+      marginBottom: "5px",
     },
     arrowIcon: {
       position: "relative",
       fontSize: "18px",
       top: "2px",
-      color: styleColor
-    }
+      color: styleColor,
+    },
   });
   const classes = useStyles();
 
@@ -47,12 +46,20 @@ const ProgressComponent = ({
   return (
     <div className={classes.root}>
       <Typography component="p" color="textSecondary" gutterBottom>
-        {labelText} - <CountUp end={Number(value)} />{" "}
+        {labelText} -{" "}
+        <strong>
+          <CountUp
+            formattingFn={(value) =>
+              new Intl.NumberFormat("en-IN").format(value)
+            }
+            end={Number(value)}
+          />{" "}
+        </strong>
         {delta > 0 && delta && (
           <React.Fragment>
             <span>(</span>
             <ArrowUpwardIcon className={classes.arrowIcon} />
-            {`${delta})`}
+            {`${new Intl.NumberFormat("en-IN").format(delta)})`}
           </React.Fragment>
         )}
       </Typography>

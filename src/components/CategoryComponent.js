@@ -61,15 +61,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CategoryComponent = ({ categories, selectedCityCategories }) => {
+const CategoryComponent = ({ categoryData, categoryOptions }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState("");
-  const [category, setCategory] = React.useState(categories[0]);
+  const [category, setCategory] = React.useState(categoryOptions[0]);
   let [selectedCategories, setSelectedCategories] = React.useState();
 
   selectedCategories =
-    selectedCityCategories &&
-    selectedCityCategories.filter((item) => item.category === category);
+  categoryData &&
+  categoryData.filter((item) => item.category === category);
 
   const handleChangePanel = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -79,8 +79,8 @@ const CategoryComponent = ({ categories, selectedCityCategories }) => {
     const value = event.target.value;
 
     const data =
-      selectedCityCategories &&
-      selectedCityCategories.filter((item) => item.category === value);
+    categoryData &&
+    categoryData.filter((item) => item.category === value);
 
     setCategory(event.target.value);
     setSelectedCategories(data);
@@ -100,23 +100,21 @@ const CategoryComponent = ({ categories, selectedCityCategories }) => {
           <Typography>Essentials / Helpline</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {categories && categories.length > 0 && (
             <FormControl className={classes.formControl}>
               <InputLabel id="category">Select Category</InputLabel>
               <Select
                 labelId="category"
                 id="category"
-                value={category || categories[0]}
+                value={category || categoryOptions[0]}
                 onChange={handleCategoryChange}
               >
-                {categories.map((item, index) => (
+                {categoryOptions.map((item, index) => (
                   <MenuItem value={item} key={index}>
                     {item}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
-          )}
         </AccordionDetails>
         <Divider />
         {selectedCategories &&

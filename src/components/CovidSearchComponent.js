@@ -4,19 +4,32 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import CovidCardDetail from "./CovidCardDetail";
+import SearchIcon from "@material-ui/icons/Search";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: "5px 0",
+    margin: "0px 0 10px 0",
+
   },
   searchPaper: {
     padding: "15px",
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+  },
+  searchHeading: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    color: "slategray",
   },
 }));
 
-const CovidSearchComponent = ({ zones, covidData, resources, cardType }) => {
-  const [value, setValue] = React.useState([]);
+const CovidSearchComponent = ({
+  zones,
+  searchValue,
+  handleSearch,
+  cardType,
+}) => {
   const classes = useStyles();
 
   const options = [
@@ -28,8 +41,13 @@ const CovidSearchComponent = ({ zones, covidData, resources, cardType }) => {
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Paper variant="outlined" square className={classes.searchPaper}>
-            <Typography component="h1" gutterBottom>
-              All {`${cardType}`} in India
+            <Typography
+              component="h2"
+              className={classes.searchHeading}
+              gutterBottom
+            >
+              All {`${cardType.charAt(0).toUpperCase() + cardType.slice(1)}s`}{" "}
+              in India
             </Typography>
             <Autocomplete
               multiple
@@ -37,35 +55,29 @@ const CovidSearchComponent = ({ zones, covidData, resources, cardType }) => {
               id="multiple-limit-tags"
               options={options}
               getOptionLabel={(option) => option[cardType]}
-              value={value}
+              value={searchValue}
               onChange={(event, newValue) => {
-                console.log("newValue", newValue);
-                setValue(newValue);
+                handleSearch(newValue);
               }}
+              closeIcon={false}
+              // renderInput={(params) => (
+              //   <div ref={params.InputProps.ref}>
+              //     <input style={{ width: 200 }} type="text" {...params.inputProps} />
+              //   </div>
+              // )}
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  variant="standard"
-                  label={`Search ${
-                    cardType === "state" ? "States" : "Districts or Cities"
-                  }`}
-                  placeholder="Type here to search"
+                  variant="outlined"
+                  label={``}
+                  placeholder="Search here..."
+                  // InputProps={{
+                  //   endAdornment: <SearchIcon />,
+                  // }}
                 />
               )}
             />
           </Paper>
-        </Grid>
-      </Grid>
-      <Grid>
-        <Grid>
-          {value && value.length > 0 && (
-            <CovidCardDetail
-              locationData={value}
-              covidData={covidData}
-              resources={resources}
-              cardType={cardType}
-            />
-          )}
         </Grid>
       </Grid>
     </React.Fragment>

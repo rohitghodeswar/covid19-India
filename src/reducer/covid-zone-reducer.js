@@ -10,11 +10,11 @@ const initialState = {
 const covidZoneReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_COVID_ZONE_REQUEST:
-      return { ...state, isLoading: true };
+      return { ...state };
 
     case GET_COVID_ZONE_SUCCESS:
       const { zones } = action.payload;
-      return { ...state, isLoading: false, zones };
+      return { ...state, zones };
     default:
       return state;
   }

@@ -5,8 +5,9 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
+import CountUp from "react-countup";
 
-// components
+// component
 import ProgressComponent from "./ProgressComponent";
 import CategoryComponent from "./CategoryComponent";
 
@@ -16,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     // maxWidth: 460,
     // margin: "0 auto",
     backgroundColor: theme.palette.background.paper,
+    borderRadius: 0,
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+    marginBottom: "10px",
   },
   title: {
     flexGrow: 1,
@@ -28,114 +33,88 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: "100%",
   },
+  zone: {
+    height: "10px",
+  },
+  cardHeader: {
+    padding: "5px 10px"
+  }
 }));
 
-const CovidCardDetail = ({ locationData, covidData, resources, cardType }) => {
+const CovidCardDetail = ({
+  title,
+  active,
+  confirmed,
+  recovered,
+  deceased,
+  delta,
+  categoryData,
+  categoryOptions,
+  zone,
+}) => {
   const classes = useStyles();
+
   return (
-    <React.Fragment>
-      {locationData.map((item, index) => {
-        const districtData = covidData.filter((data) => {
-          if (data.state === item.state) {
-            return data.districtData ? data.districtData : data;
-          }
-        });
-
-        const cityData =
-          cardType === "state"
-            ? districtData
-            : districtData[0].districtData.filter((district) => {
-                if (district.district === item.district) {
-                  return district;
+    <Card className={classes.root} variant="outlined">
+      {!!zone && (
+        <Divider
+          className={classes.zone}
+          style={{ backgroundColor: `${zone.toLowerCase()}` }}
+        />
+      )}
+      <CardHeader
+        title={title}
+        subheader={
+          <React.Fragment>
+            Total Cases -{" "}
+            <strong>
+              <CountUp
+                formattingFn={(confirmed) =>
+                  new Intl.NumberFormat("en-IN").format(confirmed)
                 }
-              });
-
-        let categories, selectedCityCategories;
-        if (resources) {
-          selectedCityCategories = resources.filter((resource) => {
-            if (cardType === "district") {
-              if (resource.city === item[cardType]) {
-                return resource;
-              }
-            } else {
-              if (resource[cardType] === item[cardType]) {
-                return resource;
-              }
-            }
-          });
-
-          const uniqueObjects = [
-            ...new Map(
-              selectedCityCategories.map((item) => [item.category, item])
-            ).values(),
-          ];
-          categories = uniqueObjects.map((cat) => cat.category);
+                end={Number(confirmed)}
+              />
+            </strong>
+          </React.Fragment>
         }
+        className={classes.cardHeader}
+      />
 
-        return (
-          <Card className={classes.root} variant="outlined" key={index}>
-            <CardHeader
-              title={`${
-                cityData[0] && cityData[0][cardType] === "Total"
-                  ? "India"
-                  : cityData[0][cardType]
-              }`}
-              subheader={`Total Cases - ${
-                cityData[0] && cityData[0].confirmed
-              }`}
-            />
-            <Divider />
+      <Divider />
 
-            <CardContent>
-              <ProgressComponent
-                labelText="Active"
-                cityData={cityData[0]}
-                min={0}
-                max={cityData[0] && cityData[0].confirmed}
-                value={cityData[0] && cityData[0].active}
-                styleColor="red"
-                delta={cityData[0].delta && cityData[0].delta.confirmed
-                  ? cityData[0].delta.confirmed
-                  : cityData[0].deltaconfirmed}
-              />
-              <ProgressComponent
-                labelText="Recovered"
-                cityData={cityData[0]}
-                min={0}
-                max={cityData[0] && cityData[0].confirmed}
-                value={cityData[0] && cityData[0].recovered}
-                styleColor="green"
-                delta={cityData[0].delta && cityData[0].delta.recovered
-                  ? cityData[0].delta.recovered
-                  : cityData[0].deltarecovered}
-
-              />
-              <ProgressComponent
-                labelText="Deaths"
-                cityData={cityData[0]}
-                min={0}
-                max={cityData[0] && cityData[0].confirmed}
-                value={
-                  cityData[0] && cityData[0].deceased
-                    ? cityData[0].deceased
-                    : cityData[0].deaths
-                }
-                styleColor="grey"
-                delta={cityData[0].delta && cityData[0].delta.deceased
-                  ? cityData[0].delta.deceased
-                  : cityData[0].deltadeaths}
-              />
-            </CardContent>
-            {categories && selectedCityCategories && cardType !== "india" && (
-              <CategoryComponent
-                selectedCityCategories={selectedCityCategories}
-                categories={categories}
-              />
-            )}
-          </Card>
-        );
-      })}
-    </React.Fragment>
+      <CardContent>
+        <ProgressComponent
+          labelText="Active"
+          min={0}
+          max={confirmed}
+          value={active}
+          styleColor="red"
+          delta={delta && delta.confirmed}
+        />
+        <ProgressComponent
+          labelText="Recovered"
+          min={0}
+          max={confirmed}
+          value={recovered}
+          styleColor="green"
+          delta={delta && delta.recovered}
+        />
+        <ProgressComponent
+          labelText="Deceased"
+          min={0}
+          max={confirmed}
+          value={deceased}
+          styleColor="gray"
+          delta={delta && delta.deceased}
+        />
+      </CardContent>
+      {categoryData && categoryData.length > 0 && (
+        <CategoryComponent
+          categoryData={categoryData}
+          categoryOptions={categoryOptions}
+        />
+      )}
+    </Card>
   );
 };
 

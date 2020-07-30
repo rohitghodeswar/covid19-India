@@ -28,12 +28,11 @@ const CategoryCardDetails = ({ data, category }) => {
           {data.descriptionandorserviceprovided}
         </Typography>
         <Typography component="p" color="textSecondary">
-          Call - <a href={`tel:${data.phonenumber}`}> {data.phonenumber}</a>
+        Phone Number - <a href={`tel:${data.phonenumber}`}> {data.phonenumber}</a>
         </Typography>
         <Typography component="p" color="textSecondary">
-          Website - {" "}
-          <a href="http://www.irdwsi.in" target="blank">
-            {data.contact}
+          <a href={data.contact} target="blank">
+            Source
           </a>
         </Typography>
       </CardContent>
