@@ -96,8 +96,28 @@ const App = () => {
       }
     };
 
+    const getGeoInfo = () => {
+      axios
+        .get("https://ipapi.co/json/")
+        .then((response) => {
+          const { latitude, longitude } = response.data;
+          fetchData(latitude, longitude);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success);
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then(function (result) {
+          if (result.state === "granted") {
+            navigator.geolocation.getCurrentPosition(success);
+          } else if (result.state === "prompt") {
+            getGeoInfo();
+          }
+        });
     } else {
       alert("Geolocation is not supported by this browser.");
     }
