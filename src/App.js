@@ -124,17 +124,12 @@ const App = () => {
         });
     };
 
+    const error = () => {
+      getGeoInfo();
+    }
+
     if (navigator.geolocation) {
-      navigator.permissions
-        .query({ name: "geolocation" })
-        .then(function (result) {
-          console.log("result", result);
-          if (result.state === "granted") {
-            navigator.geolocation.getCurrentPosition(success);
-          } else if (result.state === "prompt") {
-            getGeoInfo();
-          }
-        });
+      navigator.geolocation.getCurrentPosition(success, error);
     } else {
       alert("Geolocation is not supported by this browser.");
     }
