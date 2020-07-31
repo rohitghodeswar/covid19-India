@@ -80,7 +80,7 @@ const App = () => {
           const location = [
             {
               state: components.state,
-              district: components.state_district,
+              district: components.city || components.state_district,
               country: components.country,
               state_code: components.state_code,
             },
