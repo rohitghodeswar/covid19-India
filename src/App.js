@@ -77,6 +77,7 @@ const App = () => {
             state: components.state,
             district: components.state_district,
             country: components.country,
+            state_code: components.state_code,
           },
         ];
         dispatch({
@@ -100,8 +101,23 @@ const App = () => {
       axios
         .get("https://ipapi.co/json/")
         .then((response) => {
-          const { latitude, longitude } = response.data;
-          fetchData(latitude, longitude);
+          const { country, region, region_code, city } = response.data;
+          const location = [
+            {
+              state: region,
+              district: city,
+              country: country,
+              state_code: region_code,
+            },
+          ];
+          dispatch({
+            type: "GET_CURRENT_LOCATION",
+            payload: location,
+          });
+          dispatch({
+            type: "GET_COVID_LOADING_SUCCESS",
+          });
+          // fetchData(latitude, longitude);
         })
         .catch((error) => {
           console.log(error);
@@ -112,6 +128,7 @@ const App = () => {
       navigator.permissions
         .query({ name: "geolocation" })
         .then(function (result) {
+          console.log("result", result);
           if (result.state === "granted") {
             navigator.geolocation.getCurrentPosition(success);
           } else if (result.state === "prompt") {
