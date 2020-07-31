@@ -5,7 +5,9 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
+import Switch from "@material-ui/core/Switch";
 import CountUp from "react-countup";
+import { Doughnut } from "react-chartjs-2";
 
 // component
 import ProgressComponent from "./ProgressComponent";
@@ -39,6 +41,15 @@ const useStyles = makeStyles((theme) => ({
   cardHeader: {
     padding: "5px 10px",
   },
+  covidCardContent: {
+    position: "relative",
+    paddingTop: "18px",
+  },
+  cardSwitch: {
+    position: "absolute",
+    top: "0px",
+    right: 0,
+  },
 }));
 
 const CovidCardDetail = ({
@@ -53,6 +64,22 @@ const CovidCardDetail = ({
   zone,
 }) => {
   const classes = useStyles();
+  const data = {
+    labels: ["Active - "+active, "Recovered - "+recovered, "Deceased - "+deceased],
+    datasets: [
+      {
+        data: [active, recovered, deceased],
+        backgroundColor: ["#FF6384", "#90EE90", "#D3D3D3"],
+        hoverBackgroundColor: ["#FF6384", "#90EE90", "#D3D3D3"],
+      },
+    ],
+  };
+
+  const [showChart, setShowChart] = React.useState(false);
+
+  const handleChange = (event) => {
+    setShowChart(!showChart);
+  };
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -82,31 +109,49 @@ const CovidCardDetail = ({
 
       <Divider />
 
-      <CardContent>
-        <ProgressComponent
-          labelText="Active"
-          min={0}
-          max={confirmed}
-          value={active}
-          styleColor="red"
-          delta={delta && delta.confirmed}
-        />
-        <ProgressComponent
-          labelText="Recovered"
-          min={0}
-          max={confirmed}
-          value={recovered}
-          styleColor="green"
-          delta={delta && delta.recovered}
-        />
-        <ProgressComponent
-          labelText="Deceased"
-          min={0}
-          max={confirmed}
-          value={deceased}
-          styleColor="gray"
-          delta={delta && delta.deceased}
-        />
+      <CardContent className={classes.covidCardContent}>
+        <div className={classes.cardSwitch}>
+          <Switch
+            checked={showChart}
+            onChange={handleChange}
+            name="showChart"
+            color="primary"
+            inputProps={{ "aria-label": "secondary checkbox" }}
+          />
+        </div>
+
+        {!showChart ? (
+          <React.Fragment>
+            <ProgressComponent
+              labelText="Active"
+              min={0}
+              max={confirmed}
+              value={active}
+              styleColor="red"
+              delta={delta && delta.confirmed}
+            />
+            <ProgressComponent
+              labelText="Recovered"
+              min={0}
+              max={confirmed}
+              value={recovered}
+              styleColor="green"
+              delta={delta && delta.recovered}
+            />
+            <ProgressComponent
+              labelText="Deceased"
+              min={0}
+              max={confirmed}
+              value={deceased}
+              styleColor="gray"
+              delta={delta && delta.deceased}
+            />
+          </React.Fragment>
+        ) : (
+          <div className="chart-style">
+            <Doughnut legend={{ position: "right" }} data={data} />
+          </div>
+        )}
       </CardContent>
       {categoryData && categoryData.length > 0 && (
         <CategoryComponent

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Switch from "@material-ui/core/Switch";
+// import Switch from "@material-ui/core/Switch";
 
 // components
 import CovidRouteComponent from "./routes/CovidRouteComponent";
@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    textAlign: "center"
   },
   rootPaper: {
     boxShadow: "none",
@@ -51,17 +52,20 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [darkState, setDarkState] = useState(false);
+  // const [darkState, setDarkState] = useState(false);
 
-  const palletType = darkState ? "dark" : "light";
+  // const palletType = darkState ? "dark" : "light";
+  const palletType = "light";
+
   const theme = createMuiTheme({
     palette: {
       type: palletType,
     },
   });
-  const handleThemeChange = () => {
-    setDarkState(!darkState);
-  };
+
+  // const handleThemeChange = () => {
+  //   setDarkState(!darkState);
+  // };
 
   useEffect(() => {
     const fetchData = async (latitude, longitude) => {
@@ -153,9 +157,9 @@ const App = () => {
                   <Typography className={classes.title} variant="h6" noWrap>
                     COVID-19 INDIA
                   </Typography>
-                  <div className={classes.search}>
+                  {/* <div className={classes.search}>
                     <Switch checked={darkState} onChange={handleThemeChange} />
-                  </div>
+                  </div> */}
                 </Toolbar>
               </AppBar>
             </Grid>
