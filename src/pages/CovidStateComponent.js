@@ -6,7 +6,9 @@ import CovidCardComponent from "../components/CovidCardComponent";
 import CovidLoadingCard from "../components/CovidLoadingCard";
 
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCovidStateWiseAction } from "../middleware/covid-middleware";
+import { fetchCovidStateWiseAction,
+  fetchCovidResourceAction,
+ } from "../middleware/covid-middleware";
 
 const CovidStateComponent = () => {
   const dispatch = useDispatch();
@@ -23,7 +25,11 @@ const CovidStateComponent = () => {
   };
 
   useEffect(() => {
+    if(!resources){
+      dispatch(fetchCovidResourceAction())
+    }
     dispatch(fetchCovidStateWiseAction());
+  // eslint-disable-next-line
   }, [dispatch]);
   return (
     <React.Fragment>

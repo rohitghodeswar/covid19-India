@@ -4,13 +4,10 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import SearchIcon from "@material-ui/icons/Search";
-import InputAdornment from "@material-ui/core/InputAdornment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "0px 0 10px 0",
-
   },
   searchPaper: {
     padding: "15px",
@@ -60,20 +57,12 @@ const CovidSearchComponent = ({
                 handleSearch(newValue);
               }}
               closeIcon={false}
-              // renderInput={(params) => (
-              //   <div ref={params.InputProps.ref}>
-              //     <input style={{ width: 200 }} type="text" {...params.inputProps} />
-              //   </div>
-              // )}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   variant="outlined"
                   label={``}
                   placeholder="Search here..."
-                  // InputProps={{
-                  //   endAdornment: <SearchIcon />,
-                  // }}
                 />
               )}
             />

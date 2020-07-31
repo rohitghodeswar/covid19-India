@@ -23,7 +23,6 @@ export const fetchCovidDataAction = () => {
     dispatch(getLoadingRequest());
     dispatch(getCovidDataRequest());
     try {
-      const { isLoading } = getState().covidLoadingReducer;
       const response = await getCovidData();
       dispatch(getCovidDataSuccess(response.data));
       dispatch(getLoadingSuccess());
@@ -39,7 +38,6 @@ export const fetchCovidResourceAction = () => {
     dispatch(getCovidDataRequest());
 
     try {
-      const { isLoading } = getState().covidLoadingReducer;
       const response = await getCovidResourseData();
       dispatch(getCovidResourceSuccess(response.data));
       dispatch(getLoadingSuccess());
@@ -55,7 +53,6 @@ export const fetchCovidZoneAction = () => {
     dispatch(getCovidDataRequest());
 
     try {
-      const { isLoading } = getState().covidLoadingReducer;
       const response = await getCovidZoneData();
       dispatch(getCovidZoneSuccess(response.data));
       dispatch(getLoadingSuccess());
@@ -71,7 +68,6 @@ export const fetchCovidStateWiseAction = () => {
     dispatch(getCovidDataRequest());
 
     try {
-      const { isLoading } = getState().covidLoadingReducer;
       const response = await getCovidStateWiseData();
       dispatch(getCovidStateWiseSuccess(response.data));
       dispatch(getLoadingSuccess());

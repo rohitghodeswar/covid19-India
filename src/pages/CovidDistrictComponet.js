@@ -12,11 +12,11 @@ import CovidSearchComponent from "../components/CovidSearchComponent";
 import CovidCardComponent from "../components/CovidCardComponent";
 import CovidLoadingCard from "../components/CovidLoadingCard";
 import CovidAlertMessage from "../components/CovidAlertMessage";
+import CovidDistrictCard from "../components/CovidDistrictCard";
 
 const CovidDistrictComponent = () => {
   const dispatch = useDispatch();
   const { covidData, location } = useSelector((state) => state.covidReducer);
-  console.log('location', location)
   const { isLoading } = useSelector((state) => state.covidLoadingReducer);
 
   const { resources } = useSelector((state) => state.covidResourceReducer);
@@ -71,7 +71,7 @@ const CovidDistrictComponent = () => {
         resources.length > 0 &&
         zones &&
         zones.length > 0 && (
-          <CovidCardComponent
+          <CovidDistrictCard
             locationValue={location}
             covidData={covidData}
             resources={resources}

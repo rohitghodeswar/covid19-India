@@ -91,6 +91,7 @@ const CategoryComponent = ({ categoryData, categoryOptions }) => {
         square
         expanded={expanded === "panel1"}
         onChange={handleChangePanel("panel1")}
+        key={Math.random()}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -109,7 +110,7 @@ const CategoryComponent = ({ categoryData, categoryOptions }) => {
                 onChange={handleCategoryChange}
               >
                 {categoryOptions.map((item, index) => (
-                  <MenuItem value={item} key={index}>
+                  <MenuItem value={item} key={item}>
                     {item}
                   </MenuItem>
                 ))}

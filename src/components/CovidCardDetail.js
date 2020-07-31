@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
     height: "10px",
   },
   cardHeader: {
-    padding: "5px 10px"
-  }
+    padding: "5px 10px",
+  },
 }));
 
 const CovidCardDetail = ({

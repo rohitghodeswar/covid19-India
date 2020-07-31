@@ -7,36 +7,53 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    border: 0
+    border: 0,
   },
   cardContent: {
-      paddingTop: 0
-  }
+    paddingTop: 0,
+  },
 }));
 
 const CategoryCardDetails = ({ data, category }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root} variant="outlined">
-      <CardHeader title={category} subheader={data.nameoftheorganisation} />
+      <CardHeader
+        title={category}
+        subheader={
+          <React.Fragment>
+            <Typography component="p" color="textSecondary">
+              {data.nameoftheorganisation}
+            </Typography>
+            <Typography component="p" color="textSecondary">
+              <strong>{data.city}</strong>
+            </Typography>
+          </React.Fragment>
+        }
+      />
       <CardContent className={classes.cardContent}>
         <Typography component="p" color="textSecondary">
           {data.descriptionandorserviceprovided}
         </Typography>
-        <Typography component="p" color="textSecondary">
-        Phone Number - <a href={`tel:${data.phonenumber}`}> {data.phonenumber}</a>
-        </Typography>
-        <Typography component="p" color="textSecondary">
-          <a href={data.contact} target="blank">
-            Source
-          </a>
-        </Typography>
+        {data.phonenumber && (
+          <Typography component="p" color="textSecondary">
+            Phone Number -{" "}
+            <a href={`tel:${data.phonenumber}`}> {data.phonenumber}</a>
+          </Typography>
+        )}
+
+        {data.contact && (
+          <Typography component="p" color="textSecondary">
+            <a href={data.contact} target="blank">
+              Source
+            </a>
+          </Typography>
+        )}
       </CardContent>
-    <Divider />
+      <Divider />
     </Card>
   );
 };

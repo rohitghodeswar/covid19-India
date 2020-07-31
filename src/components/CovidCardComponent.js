@@ -51,7 +51,8 @@ const CovidCardComponent = ({
             (data) => data.state.toLowerCase() === location.state.toLowerCase()
           );
           const districtData = stateData.districtData.find(
-            (data) => data.district.toLowerCase() === location.district.toLowerCase()
+            (data) =>
+              data.district.toLowerCase() === location.district.toLowerCase()
           );
           const zoneData = zones.find(
             (zone) => zone[cardType] === location.district
@@ -62,6 +63,7 @@ const CovidCardComponent = ({
 
         const categoryData =
           resources &&
+          // eslint-disable-next-line
           resources.filter((res) => {
             if (
               res[cardType === "district" ? "city" : cardType] ===

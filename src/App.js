@@ -68,8 +68,9 @@ const App = () => {
       dispatch({
         type: "GET_COVID_LOADING_REQUEST",
       });
-      const lat = latitude;
-      const long = longitude;
+
+      const lat = 12.9169613;
+      const long = 77.7171747;
       const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat},${long}&key=63a872e5fe20495c9ee636dbd2207aff`;
       const response = await axios.get(url);
       if (response.data) {
