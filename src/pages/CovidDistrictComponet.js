@@ -11,10 +11,12 @@ import {
 import CovidSearchComponent from "../components/CovidSearchComponent";
 import CovidCardComponent from "../components/CovidCardComponent";
 import CovidLoadingCard from "../components/CovidLoadingCard";
+import CovidAlertMessage from "../components/CovidAlertMessage";
 
 const CovidDistrictComponent = () => {
   const dispatch = useDispatch();
   const { covidData, location } = useSelector((state) => state.covidReducer);
+  console.log('location', location)
   const { isLoading } = useSelector((state) => state.covidLoadingReducer);
 
   const { resources } = useSelector((state) => state.covidResourceReducer);
@@ -62,6 +64,7 @@ const CovidDistrictComponent = () => {
 
       {location &&
         location.length > 0 &&
+        location[0].country === "India" &&
         covidData &&
         covidData.length > 0 &&
         resources &&
@@ -76,6 +79,9 @@ const CovidDistrictComponent = () => {
             zones={zones}
           />
         )}
+      {location && location.length > 0 && location[0].country !== "India" && (
+        <CovidAlertMessage />
+      )}
     </React.Fragment>
   );
 };

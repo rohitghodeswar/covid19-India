@@ -68,25 +68,31 @@ const App = () => {
       dispatch({
         type: "GET_COVID_LOADING_REQUEST",
       });
-      const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude},${longitude}&key=63a872e5fe20495c9ee636dbd2207aff`;
+      const lat = latitude;
+      const long = longitude;
+      const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat},${long}&key=63a872e5fe20495c9ee636dbd2207aff`;
       const response = await axios.get(url);
       if (response.data) {
         const { components } = response.data.results[0];
-        const location = [
-          {
-            state: components.state,
-            district: components.state_district,
-            country: components.country,
-            state_code: components.state_code,
-          },
-        ];
-        dispatch({
-          type: "GET_CURRENT_LOCATION",
-          payload: location,
-        });
-        dispatch({
-          type: "GET_COVID_LOADING_SUCCESS",
-        });
+        if (components.country !== "India") {
+          getGeoInfo();
+        } else {
+          const location = [
+            {
+              state: components.state,
+              district: components.state_district,
+              country: components.country,
+              state_code: components.state_code,
+            },
+          ];
+          dispatch({
+            type: "GET_CURRENT_LOCATION",
+            payload: location,
+          });
+          dispatch({
+            type: "GET_COVID_LOADING_SUCCESS",
+          });
+        }
       }
     };
 
@@ -101,12 +107,12 @@ const App = () => {
       axios
         .get("https://ipapi.co/json/")
         .then((response) => {
-          const { country, region, region_code, city } = response.data;
+          const { country_name, region, region_code, city } = response.data;
           const location = [
             {
               state: region,
               district: city,
-              country: country,
+              country: country_name,
               state_code: region_code,
             },
           ];
@@ -126,7 +132,7 @@ const App = () => {
 
     const error = () => {
       getGeoInfo();
-    }
+    };
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error);
