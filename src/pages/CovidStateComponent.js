@@ -17,7 +17,6 @@ const CovidStateComponent = () => {
   const { stateWiseData } = useSelector((state) => state.covidStateWiseReducer);
   const { resources } = useSelector((state) => state.covidResourceReducer);
   const { zones } = useSelector((state) => state.covidZoneReducer);
-  const { isLoading } = useSelector((state) => state.covidLoadingReducer);
 
   const [searchValue, setSearchValue] = useState([]);
 

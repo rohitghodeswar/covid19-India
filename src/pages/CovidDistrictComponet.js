@@ -16,7 +16,6 @@ import CovidDistrictCard from "../components/CovidDistrictCard";
 const CovidDistrictComponent = () => {
   const dispatch = useDispatch();
   const { covidData, location } = useSelector((state) => state.covidReducer);
-  const { isLoading } = useSelector((state) => state.covidLoadingReducer);
 
   const { resources } = useSelector((state) => state.covidResourceReducer);
   const { zones } = useSelector((state) => state.covidZoneReducer);
