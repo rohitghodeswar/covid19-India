@@ -10,7 +10,6 @@ import {
 //components
 import CovidSearchComponent from "../components/CovidSearchComponent";
 import CovidCardComponent from "../components/CovidCardComponent";
-import CovidLoadingCard from "../components/CovidLoadingCard";
 import CovidAlertMessage from "../components/CovidAlertMessage";
 import CovidDistrictCard from "../components/CovidDistrictCard";
 
@@ -60,7 +59,6 @@ const CovidDistrictComponent = () => {
             zones={zones}
           />
         )}
-      {isLoading && <CovidLoadingCard />}
 
       {location &&
         location.length > 0 &&

@@ -1,6 +1,8 @@
 import React, { lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 
+import CovidLoadingCard from "./../components/CovidLoadingCard"
+
 const CovidDistrictComponet = lazy(() =>
   import("./../pages/CovidDistrictComponet")
 );
@@ -12,7 +14,7 @@ const CovidIndiaComponent = lazy(() =>
 );
 
 const Loading = () => {
-  return "";
+  return <CovidLoadingCard />;
 };
 
 const CovidRouteComponent = () => {

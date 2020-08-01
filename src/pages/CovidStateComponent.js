@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 //components
 import CovidSearchComponent from "../components/CovidSearchComponent";
 import CovidCardComponent from "../components/CovidCardComponent";
-import CovidLoadingCard from "../components/CovidLoadingCard";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -57,7 +56,6 @@ const CovidStateComponent = () => {
             cardType="state"
           />
         )}
-      {isLoading && <CovidLoadingCard />}
 
       {location &&
         location.length > 0 &&
