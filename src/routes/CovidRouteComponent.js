@@ -12,7 +12,7 @@ const CovidIndiaComponent = lazy(() =>
 );
 
 const Loading = () => {
-  return <p>Loading...</p>;
+  return "";
 };
 
 const CovidRouteComponent = () => {
