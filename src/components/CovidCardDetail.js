@@ -65,7 +65,7 @@ const CovidCardDetail = ({
 }) => {
   const classes = useStyles();
   const data = {
-    labels: ["Active - "+active, "Recovered - "+recovered, "Deceased - "+deceased],
+    labels: ["Active", "Recovered", "Deceased"],
     datasets: [
       {
         data: [active, recovered, deceased],
@@ -148,9 +148,7 @@ const CovidCardDetail = ({
             />
           </React.Fragment>
         ) : (
-          <div className="chart-style">
             <Doughnut legend={{ position: "right" }} data={data} />
-          </div>
         )}
       </CardContent>
       {categoryData && categoryData.length > 0 && (
