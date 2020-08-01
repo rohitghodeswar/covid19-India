@@ -15,3 +15,7 @@ export const getCovidZoneData = () => {
 export const getCovidStateWiseData = () => {
   return service.get("/data.json");
 };
+
+export const getLogData = () => {
+  return service.get("/updatelog/log.json");
+};

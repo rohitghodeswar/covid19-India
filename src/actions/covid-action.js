@@ -12,12 +12,14 @@ import {
   GET_COVID_STATEWISE_SUCCESS,
   GET_COVID_LOADING_REQUEST,
   GET_COVID_LOADING_SUCCESS,
+  GET_COVID_LOG_REQUEST,
+  GET_COVID_LOG_SUCCESS,
 } from "../constants/action-types";
 
 export const getCurrentLocation = (data) => ({
   type: GET_CURRENT_LOCATION,
   payload: data,
-})
+});
 
 export const getCovidDataRequest = () => ({
   type: GET_COVID_DATA_REQUEST,
@@ -56,8 +58,18 @@ export const getCovidStateWiseSuccess = (data) => ({
 });
 
 export const getLoadingRequest = () => ({
-  type: GET_COVID_LOADING_REQUEST
-})
+  type: GET_COVID_LOADING_REQUEST,
+});
+
 export const getLoadingSuccess = () => ({
-  type: GET_COVID_LOADING_SUCCESS
-})
+  type: GET_COVID_LOADING_SUCCESS,
+});
+
+export const getLogRequest = () => ({
+  type: GET_COVID_LOG_REQUEST,
+});
+
+export const getLogSuccess = (data) => ({
+  type: GET_COVID_LOG_SUCCESS,
+  payload: data
+});

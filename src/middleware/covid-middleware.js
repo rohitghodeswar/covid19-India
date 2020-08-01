@@ -3,6 +3,7 @@ import {
   getCovidResourseData,
   getCovidZoneData,
   getCovidStateWiseData,
+  getLogData,
 } from "../services/covid-service";
 
 import {
@@ -16,10 +17,12 @@ import {
   getCovidZoneSuccess,
   getCovidStateWiseRequest,
   getCovidStateWiseSuccess,
+  getLogRequest,
+  getLogSuccess,
 } from "../actions/covid-action";
 
 export const fetchCovidDataAction = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(getLoadingRequest());
     dispatch(getCovidDataRequest());
     try {
@@ -33,9 +36,9 @@ export const fetchCovidDataAction = () => {
 };
 
 export const fetchCovidResourceAction = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
+    dispatch(getLoadingRequest());
     dispatch(getCovidResourceRequest());
-    dispatch(getCovidDataRequest());
 
     try {
       const response = await getCovidResourseData();
@@ -48,9 +51,9 @@ export const fetchCovidResourceAction = () => {
 };
 
 export const fetchCovidZoneAction = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
+    dispatch(getLoadingRequest());
     dispatch(getCovidZoneRequest());
-    dispatch(getCovidDataRequest());
 
     try {
       const response = await getCovidZoneData();
@@ -63,13 +66,27 @@ export const fetchCovidZoneAction = () => {
 };
 
 export const fetchCovidStateWiseAction = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
+    dispatch(getLoadingRequest());
     dispatch(getCovidStateWiseRequest());
-    dispatch(getCovidDataRequest());
 
     try {
       const response = await getCovidStateWiseData();
       dispatch(getCovidStateWiseSuccess(response.data));
+      dispatch(getLoadingSuccess());
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
+};
+
+export const fetchLogAction = () => {
+  return async (dispatch) => {
+    dispatch(getLoadingRequest());
+    dispatch(getLogRequest());
+    try {
+      const response = await getLogData();
+      dispatch(getLogSuccess(response.data));
       dispatch(getLoadingSuccess());
     } catch (e) {
       console.log("error", e);

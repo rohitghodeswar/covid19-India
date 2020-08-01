@@ -1,20 +1,32 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import CovidDistrictComponet from "./../pages/CovidDistrictComponet";
-import CovidStateComponent from "./../pages/CovidStateComponent";
-import CovidIndiaComponent from "./../pages/CovidIndiaComponent";
+const CovidDistrictComponet = lazy(() =>
+  import("./../pages/CovidDistrictComponet")
+);
+const CovidStateComponent = lazy(() =>
+  import("./../pages/CovidStateComponent")
+);
+const CovidIndiaComponent = lazy(() =>
+  import("./../pages/CovidIndiaComponent")
+);
+
+const Loading = () => {
+  return <p>Loading...</p>;
+};
 
 const CovidRouteComponent = () => {
   return (
     <React.Fragment>
       <Switch>
-        <Route exact path="/" component={CovidDistrictComponet} />
-        <Route path="/states" component={CovidStateComponent} />
-        <Route path="/india" component={CovidIndiaComponent} />
+        <React.Suspense fallback={<Loading />}>
+          <Route exact path="/" component={CovidDistrictComponet} />
+          <Route path="/states" component={CovidStateComponent} />
+          <Route path="/india" component={CovidIndiaComponent} />
+        </React.Suspense>
       </Switch>
     </React.Fragment>
   );
 };
 
-export default CovidRouteComponent;
+export default React.memo(CovidRouteComponent);

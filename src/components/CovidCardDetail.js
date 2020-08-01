@@ -6,6 +6,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
 import Switch from "@material-ui/core/Switch";
+import Typography from "@material-ui/core/Typography";
+
 import CountUp from "react-countup";
 import { Doughnut } from "react-chartjs-2";
 
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     height: "10px",
   },
   cardHeader: {
-    padding: "5px 10px",
+    padding: "10px 10px",
   },
   covidCardContent: {
     position: "relative",
@@ -83,12 +85,6 @@ const CovidCardDetail = ({
 
   return (
     <Card className={classes.root} variant="outlined">
-      {!!zone && (
-        <Divider
-          className={classes.zone}
-          style={{ backgroundColor: `${zone.toLowerCase()}` }}
-        />
-      )}
       <CardHeader
         title={title}
         subheader={
@@ -102,6 +98,14 @@ const CovidCardDetail = ({
                 end={Number(confirmed)}
               />
             </strong>
+            {!!zone && (
+              <Typography component="p" color="textSecondary">
+                Zone - {" "}
+                <strong style={{ color: `${zone.toLowerCase()}` }}>
+                  {`${zone.charAt(0).toUpperCase() + zone.slice(1)} `}
+                </strong>
+              </Typography>
+            )}
           </React.Fragment>
         }
         className={classes.cardHeader}
@@ -148,7 +152,7 @@ const CovidCardDetail = ({
             />
           </React.Fragment>
         ) : (
-            <Doughnut legend={{ position: "right" }} data={data} />
+          <Doughnut legend={{ position: "right" }} data={data} />
         )}
       </CardContent>
       {categoryData && categoryData.length > 0 && (
