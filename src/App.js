@@ -170,7 +170,7 @@ const App = () => {
   const handleChangeWhatsApp = () => {
     setOpen(false);
     const linkToShare = `https://wa.me/?text=${encodeURIComponent(
-      "Latest Covid-19 India updates on Latest Covid-19 India updates on https://covid19-lite.netlify.app/"
+      "Latest Covid-19 India updates on https://covid19-lite.netlify.app/"
     )}`;
     window.open(linkToShare, "_blank");
   };
