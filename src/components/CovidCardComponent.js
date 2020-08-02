@@ -86,6 +86,19 @@ const CovidCardComponent = ({
             },
           };
           cardData = indiaObj;
+        } else if (cardType === "district") {
+          const stateData = covidData.find(
+            (data) => data.state.toLowerCase() === location.state.toLowerCase()
+          );
+          const districtData = stateData.districtData.find(
+            (data) =>
+              data.district.toLowerCase() === location.district.toLowerCase()
+          );
+          const zoneData = zones.find(
+            (zone) => zone[cardType] === location.district
+          );
+          districtData["zone"] = zoneData.zone.toLowerCase();
+          cardData = districtData;
         }
 
         const categoryData =
