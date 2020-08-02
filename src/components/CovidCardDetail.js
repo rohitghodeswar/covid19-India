@@ -7,6 +7,7 @@ import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
 import Switch from "@material-ui/core/Switch";
 import Typography from "@material-ui/core/Typography";
+import UpdateIcon from "@material-ui/icons/Update";
 
 import CountUp from "react-countup";
 import { Doughnut } from "react-chartjs-2";
@@ -52,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
     top: "0px",
     right: 0,
   },
+  updateIcon: {
+    position: "relative",
+    top: "5px"
+  }
 }));
 
 const CovidCardDetail = ({
@@ -64,6 +69,7 @@ const CovidCardDetail = ({
   categoryData,
   categoryOptions,
   zone,
+  lastUpdated,
 }) => {
   const classes = useStyles();
   const data = {
@@ -100,10 +106,18 @@ const CovidCardDetail = ({
             </strong>
             {!!zone && (
               <Typography component="p" color="textSecondary">
-                Zone - {" "}
+                Zone -{" "}
                 <strong style={{ color: `${zone.toLowerCase()}` }}>
                   {`${zone.charAt(0).toUpperCase() + zone.slice(1)} `}
                 </strong>
+              </Typography>
+            )}
+            {lastUpdated && (
+              <Typography component="p" color="textSecondary">
+                <UpdateIcon className={classes.updateIcon}/>{" "}
+                <strong>{`${
+                  lastUpdated.charAt(0).toUpperCase() + lastUpdated.slice(1)
+                } ago`}</strong>
               </Typography>
             )}
           </React.Fragment>

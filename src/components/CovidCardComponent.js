@@ -1,6 +1,34 @@
 import React from "react";
+import formatDistance from "date-fns/formatDistance";
 
 import CovidCardDetail from "./CovidCardDetail";
+
+const getTimeDiff = (data) => {
+  const dateTime = data.split(" ");
+
+  const date = dateTime[0].split("/");
+  const time = dateTime[1].split(":");
+  const timeDiff = formatDistance(
+    new Date(
+      Number(new Date().getFullYear()),
+      Number(new Date().getMonth()) + 1,
+      Number(new Date().getDate()),
+      new Date().getHours(),
+      new Date().getMinutes(),
+      new Date().getSeconds()
+    ),
+    new Date(
+      date[2],
+      Number(date[1]),
+      Number(date[0]),
+      time[0],
+      time[1],
+      time[2]
+    ),
+    { includeSeconds: true }
+  );
+  return timeDiff;
+};
 
 const CovidCardComponent = ({
   locationValue,
@@ -17,12 +45,18 @@ const CovidCardComponent = ({
           const stateData = covidData.find(
             (data) => data.state.toLowerCase() === location.state.toLowerCase()
           );
+          let timeDiff;
+          if (stateData && stateData.lastupdatedtime) {
+            timeDiff = getTimeDiff(stateData.lastupdatedtime);
+          }
+
           const stateObj = {
             active: stateData.active,
             confirmed: stateData.confirmed,
             deceased: stateData.deaths,
             recovered: stateData.recovered,
             [cardType]: location.state,
+            lastUpdated: timeDiff,
             delta: {
               confirmed: stateData.deltaconfirmed,
               deceased: stateData.deltadeaths,
@@ -33,12 +67,18 @@ const CovidCardComponent = ({
           cardData = stateObj;
         } else if (cardType === "india") {
           const stateData = covidData.find((data) => data.state === "Total");
+          let timeDiff;
+          if (stateData && stateData.lastupdatedtime) {
+            timeDiff = getTimeDiff(stateData.lastupdatedtime);
+          }
+
           const indiaObj = {
             active: stateData.active,
             confirmed: stateData.confirmed,
             deceased: stateData.deaths,
             recovered: stateData.recovered,
             [cardType]: "India",
+            lastUpdated: timeDiff,
             delta: {
               confirmed: stateData.deltaconfirmed,
               deceased: stateData.deltadeaths,
@@ -46,19 +86,6 @@ const CovidCardComponent = ({
             },
           };
           cardData = indiaObj;
-        } else if (cardType === "district") {
-          const stateData = covidData.find(
-            (data) => data.state.toLowerCase() === location.state.toLowerCase()
-          );
-          const districtData = stateData.districtData.find(
-            (data) =>
-              data.district.toLowerCase() === location.district.toLowerCase()
-          );
-          const zoneData = zones.find(
-            (zone) => zone[cardType] === location.district
-          );
-          districtData["zone"] = zoneData.zone.toLowerCase();
-          cardData = districtData;
         }
 
         const categoryData =
@@ -92,6 +119,7 @@ const CovidCardComponent = ({
             categoryData={categoryData}
             categoryOptions={categoryOptions}
             zone={cardData.zone}
+            lastUpdated={cardData.lastUpdated}
           />
         );
       })}
