@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     left: "-5px",
   },
   phoneNum: {
-    marginBottom: "5px"
-  }
+    marginBottom: "5px",
+  },
 }));
 
 const CategoryCardDetails = ({ data, category }) => {
@@ -52,14 +52,11 @@ const CategoryCardDetails = ({ data, category }) => {
         {phoneNums && phoneNums.length > 0 && (
           <div className={classes.phoneNum}>
             <PhoneAndroidOutlinedIcon className={classes.phoneIcon} />
-            {phoneNums.map((num) => {
+            {phoneNums.map((num, index) => {
               return (
-                <>
-                <a key={num} href={`tel:${num}`}>
-                  
-                  {num}
-                </a> {" "}
-                </>
+                <span key={index}>
+                  <a href={`tel:${num}`}>{num}</a>{" "}
+                </span>
               );
             })}
           </div>

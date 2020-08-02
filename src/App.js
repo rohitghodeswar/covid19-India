@@ -19,6 +19,11 @@ import CovidNavigationComponent from "./components/CovidNavigationComponent";
 //utils
 import { useDispatch } from "react-redux";
 
+import SpeedDial from "@material-ui/lab/SpeedDial";
+import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
+import ShareIcon from "@material-ui/icons/Share";
+import WhatsAppIcon from "@material-ui/icons/WhatsApp";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -27,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    textAlign: "center"
+    textAlign: "center",
   },
   rootPaper: {
     boxShadow: "none",
@@ -46,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1),
       width: "auto",
     },
+  },
+  speedDial: {
+    position: "fixed",
+    right: "10px",
+    bottom: "10px",
   },
 }));
 
@@ -147,6 +157,24 @@ const App = () => {
     }
   }, [dispatch]);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChangeWhatsApp = () => {
+    setOpen(false);
+    const linkToShare = `https://wa.me/?text=${encodeURIComponent(
+      "Latest Covid-19 India updates on Latest Covid-19 India updates on https://covid19-lite.netlify.app/"
+    )}`;
+    window.open(linkToShare, "_blank");
+  };
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
@@ -167,6 +195,25 @@ const App = () => {
             <Grid item xs={12}>
               <CovidNavigationComponent />
               <CovidRouteComponent />
+            </Grid>
+            <Grid item xs={12}>
+              <SpeedDial
+                ariaLabel="SpeedDial"
+                className={classes.speedDial}
+                icon={<ShareIcon />}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                open={open}
+                FabProps={{
+                  size: "medium",
+                }}
+              >
+                <SpeedDialAction
+                  icon={<WhatsAppIcon />}
+                  tooltipTitle="whatsApp"
+                  onClick={handleChangeWhatsApp}
+                />
+              </SpeedDial>
             </Grid>
           </Grid>
         </Paper>
