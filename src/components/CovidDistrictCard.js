@@ -6,7 +6,6 @@ const CovidDistrictCard = ({
   locationValue,
   covidData,
   resources,
-  cardType,
   zones,
 }) => {
   return (
@@ -16,15 +15,28 @@ const CovidDistrictCard = ({
           const stateData = covidData.find(
             (data) => data.state.toLowerCase() === location.state.toLowerCase()
           );
+          let distData;
           const districtData = stateData.districtData.filter((data) =>
             data.district
               .toLowerCase()
               .includes(location.district.toLowerCase())
           );
+
+          if (districtData.length > 0) {
+            distData = districtData;
+          } else {
+            const loc = location.district.split(" ")[0];
+
+            const districtData = stateData.districtData.filter((data) =>
+              data.district.toLowerCase().includes(loc.toLowerCase())
+            );
+            distData = districtData;
+          }
+
           return (
             <CovidDistrictCardDetail
               key={location}
-              districtData={districtData}
+              districtData={distData}
               zones={zones}
               resources={resources}
               location={location}
