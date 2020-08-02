@@ -143,6 +143,7 @@ const App = () => {
       navigator.geolocation.getCurrentPosition(success, error);
     } else {
       alert("Geolocation is not supported by this browser.");
+      getGeoInfo();
     }
   }, [dispatch]);
 
