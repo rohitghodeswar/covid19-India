@@ -26,43 +26,54 @@ const useStyles = makeStyles((theme) => ({
 
 const CovidNavigationComponent = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState("districts");
+  let pathName = "districts";
+  if (window.location.pathname === "/") {
+    pathName = "districts";
+  }
+  if (window.location.pathname === "/states") {
+    pathName = "states";
+  }
+  if (window.location.pathname === "/india") {
+    pathName = "india";
+  }
+
+  const [value, setValue] = React.useState(pathName);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-      <AppBar position="sticky" color="inherit" className={classes.appBar}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={handleChange}
-          className={classes.root}
-        >
-          <BottomNavigationAction
-            component={Link}
-            to="/"
-            value="districts"
-            label="Districts"
-            icon={<LocationCityIcon />}
-          />
-          <BottomNavigationAction
-            component={Link}
-            to="/states"
-            value="states"
-            label="States"
-            icon={<AllOutIcon />}
-          />
-          <BottomNavigationAction
-            component={Link}
-            to="/india"
-            label="India"
-            value="india"
-            icon={<PublicIcon />}
-          />
-        </BottomNavigation>
-      </AppBar>
+    <AppBar position="sticky" color="inherit" className={classes.appBar}>
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={handleChange}
+        className={classes.root}
+      >
+        <BottomNavigationAction
+          component={Link}
+          to="/"
+          value="districts"
+          label="Districts"
+          icon={<LocationCityIcon />}
+        />
+        <BottomNavigationAction
+          component={Link}
+          to="/states"
+          value="states"
+          label="States"
+          icon={<AllOutIcon />}
+        />
+        <BottomNavigationAction
+          component={Link}
+          to="/india"
+          label="India"
+          value="india"
+          icon={<PublicIcon />}
+        />
+      </BottomNavigation>
+    </AppBar>
   );
 };
 
