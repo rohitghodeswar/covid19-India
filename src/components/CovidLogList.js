@@ -16,8 +16,11 @@ const useStyles = makeStyles((theme) => ({
   },
   timeIcon: {
     position: "relative",
-    top: "5px",
+    top: "6px",
     marginRight: "5px",
+  },
+  cardText: {
+    padding: "10px 15px",
   },
 }));
 
@@ -59,19 +62,26 @@ const CovidLogList = ({ logData }) => {
         // eslint-disable-next-line
         logData.map((data, index) => {
           const logTodayDate = new Date(data.timestamp * 1000).toDateString();
+          const lastUpdated = getTimeDiff(data.timestamp);
 
           if (lastDate === logTodayDate) {
             data.update = data.update.replace(/\n/g, "<br/>");
             return (
               <Paper key={index} className={classes.logList}>
-                <Typography component="p" color="textSecondary">
+                <Typography
+                  component="p"
+                  color="textSecondary"
+                  style={{ paddingLeft: "10px" }}
+                >
                   <AccessTimeIcon className={classes.timeIcon} />
-                  <strong>{`${getTimeDiff(data.timestamp)} ago`}</strong>
+                  <strong>{`${
+                    lastUpdated.charAt(0).toUpperCase() + lastUpdated.slice(1)
+                  } ago`}</strong>
                 </Typography>
                 <Typography
                   component="p"
                   color="textSecondary"
-                  style={{ padding: "5px" }}
+                  className={classes.cardText}
                 >
                   <span
                     dangerouslySetInnerHTML={{

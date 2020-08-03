@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Paper, Grid } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,10 +30,23 @@ const CovidSearchComponent = ({
   cardType,
 }) => {
   const classes = useStyles();
+  const { location } = useSelector((state) => state.covidReducer);
+  const [options, setOptions] = React.useState([]);
 
-  const options = [
-    ...new Map(zones.map((item) => [item[cardType], item])).values(),
-  ];
+  useEffect(() => {
+    let options = [
+      ...new Map(zones.map((item) => [item[cardType], item])).values(),
+    ];
+
+    if (location && location.length > 0 && location[0].country === "India") {
+      const filteredOptions = options.filter(
+        (data) => data[cardType] !== location[0][cardType]
+      );
+      setOptions(filteredOptions);
+    } else {
+      setOptions(options);
+    }
+  }, [location, zones, cardType]);
 
   return (
     <React.Fragment>
