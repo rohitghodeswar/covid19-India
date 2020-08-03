@@ -40,7 +40,7 @@ const CategoryCardDetails = ({ data, category }) => {
               {data.nameoftheorganisation}
             </Typography>
             <Typography component="p" color="textSecondary">
-              <strong>{data.city}</strong>
+              <strong>{`${data.city}, ${data.state}`}</strong>
             </Typography>
           </React.Fragment>
         }

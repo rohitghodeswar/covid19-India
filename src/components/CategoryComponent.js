@@ -64,14 +64,15 @@ const useStyles = makeStyles((theme) => ({
 const CategoryComponent = ({ categoryData, categoryOptions }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState("");
-  const [category, setCategory] = React.useState(categoryOptions[0]);
-  let [selectedCategories, setSelectedCategories] = React.useState();
-
-  selectedCategories =
-  categoryData &&
-  categoryData.filter((item) => item.category === category);
+  const [category, setCategory] = React.useState("");
+  let [selectedCategories, setSelectedCategories] = React.useState([]);
 
   const handleChangePanel = (panel) => (event, newExpanded) => {
+    const data =
+      categoryData &&
+      categoryData.filter((item) => item.category === categoryOptions[0]);
+    setSelectedCategories(data);
+    setCategory(categoryOptions[0]);
     setExpanded(newExpanded ? panel : false);
   };
 
@@ -79,12 +80,12 @@ const CategoryComponent = ({ categoryData, categoryOptions }) => {
     const value = event.target.value;
 
     const data =
-    categoryData &&
-    categoryData.filter((item) => item.category === value);
+      categoryData && categoryData.filter((item) => item.category === value);
 
     setCategory(event.target.value);
     setSelectedCategories(data);
   };
+
   return (
     <React.Fragment>
       <Accordion
@@ -101,24 +102,25 @@ const CategoryComponent = ({ categoryData, categoryOptions }) => {
           <Typography>Essentials / Helpline</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="category">Select Category</InputLabel>
-              <Select
-                labelId="category"
-                id="category"
-                value={category || categoryOptions[0]}
-                onChange={handleCategoryChange}
-              >
-                {categoryOptions.map((item, index) => (
-                  <MenuItem value={item} key={item}>
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="category">Select Category</InputLabel>
+            <Select
+              labelId="category"
+              id="category"
+              value={category}
+              onChange={handleCategoryChange}
+            >
+              {categoryOptions.map((item, index) => (
+                <MenuItem value={item} key={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </AccordionDetails>
         <Divider />
         {selectedCategories &&
+          selectedCategories.length > 0 &&
           selectedCategories.map((data) => (
             <CategoryCardDetails
               data={data}
