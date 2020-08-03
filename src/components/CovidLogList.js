@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "5px",
   },
   cardText: {
-    padding: "10px 15px",
+    padding: "5px 15px",
   },
 }));
 
@@ -71,9 +71,9 @@ const CovidLogList = ({ logData }) => {
                 <Typography
                   component="p"
                   color="textSecondary"
-                  style={{ paddingLeft: "10px" }}
+                  style={{ paddingLeft: "15px", paddingTop: "5px" }}
                 >
-                  <AccessTimeIcon className={classes.timeIcon} />
+                  {/* <AccessTimeIcon className={classes.timeIcon} /> */}
                   <strong>{`${
                     lastUpdated.charAt(0).toUpperCase() + lastUpdated.slice(1)
                   } ago`}</strong>
