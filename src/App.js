@@ -90,7 +90,23 @@ const App = () => {
       if (response.data) {
         const { components } = response.data.results[0];
         if (components.country !== "India") {
-          getGeoInfo();
+          // hardcoded location
+          const location = [
+            {
+              state: "Maharashtra",
+              district: "Pune",
+              country: "India",
+              state_code: "MH",
+            },
+          ];
+          dispatch({
+            type: "GET_CURRENT_LOCATION",
+            payload: location,
+          });
+          dispatch({
+            type: "GET_COVID_LOADING_SUCCESS",
+          });
+          // getGeoInfo();
         } else {
           const location = [
             {
