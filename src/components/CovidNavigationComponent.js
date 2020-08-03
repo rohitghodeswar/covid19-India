@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
@@ -24,8 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CovidNavigationComponent = () => {
-  const classes = useStyles();
+const setTabValue = (path) => {
   let pathName = "districts";
   if (window.location.pathname === "/") {
     pathName = "districts";
@@ -36,8 +35,36 @@ const CovidNavigationComponent = () => {
   if (window.location.pathname === "/india") {
     pathName = "india";
   }
+  return pathName;
+};
 
-  const [value, setValue] = React.useState(pathName);
+const CovidNavigationComponent = () => {
+  const classes = useStyles();
+  const [locationKeys, setLocationKeys] = useState([]);
+  const [value, setValue] = useState("districts");
+
+  const history = useHistory();
+
+  useEffect(() => {
+    setValue(setTabValue(window.location.pathname));
+    return history.listen((location) => {
+      if (history.action === "PUSH") {
+        setLocationKeys([location.key]);
+      }
+
+      if (history.action === "POP") {
+        if (locationKeys[1] === location.key) {
+          // Handle forward event
+          setLocationKeys(([_, ...keys]) => keys);
+          setValue(setTabValue(window.location.pathname));
+        } else {
+          // Handle back event
+          setLocationKeys((keys) => [location.key, ...keys]);
+          setValue(setTabValue(window.location.pathname));
+        }
+      }
+    });
+  }, [locationKeys, history]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
