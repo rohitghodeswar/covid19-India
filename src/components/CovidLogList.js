@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import formatDistance from "date-fns/formatDistance";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
+// import AccessTimeIcon from "@material-ui/icons/AccessTime";
 
 const useStyles = makeStyles((theme) => ({
   logList: {
