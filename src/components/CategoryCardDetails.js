@@ -7,6 +7,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import PhoneAndroidOutlinedIcon from "@material-ui/icons/PhoneAndroidOutlined";
+import LinkIcon from "@material-ui/icons/Link";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     paddingTop: 0,
   },
-  phoneIcon: {
+  cardIcon: {
     position: "relative",
     top: "5px",
     left: "-5px",
@@ -51,7 +52,7 @@ const CategoryCardDetails = ({ data, category }) => {
 
         {phoneNums && phoneNums.length > 0 && (
           <div className={classes.phoneNum}>
-            <PhoneAndroidOutlinedIcon className={classes.phoneIcon} />
+            <PhoneAndroidOutlinedIcon className={classes.cardIcon} />
             {phoneNums.map((num, index) => {
               return (
                 <span key={index}>
@@ -64,6 +65,7 @@ const CategoryCardDetails = ({ data, category }) => {
 
         {data.contact && (
           <Typography component="p" color="textSecondary">
+            <LinkIcon className={classes.cardIcon} />
             <a href={data.contact} target="blank">
               Source
             </a>
