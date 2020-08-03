@@ -2,17 +2,47 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import formatDistance from "date-fns/formatDistance";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 
 const useStyles = makeStyles((theme) => ({
   logList: {
     width: "100%",
     marginBottom: "10px",
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "rgba(108,117,125,.0627451)",
     borderRadius: 0,
     // boxShadow:
     //   "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
   },
+  timeIcon: {
+    position: "relative",
+    top: "5px",
+    marginRight: "5px",
+  },
 }));
+
+const getTimeDiff = (data) => {
+  const timeDiff = formatDistance(
+    new Date(
+      Number(new Date().getFullYear()),
+      Number(new Date().getMonth()) + 1,
+      Number(new Date().getDate()),
+      new Date().getHours(),
+      new Date().getMinutes(),
+      new Date().getSeconds()
+    ),
+    new Date(
+      Number(new Date().getFullYear()),
+      Number(new Date().getMonth()) + 1,
+      Number(new Date().getDate()),
+      new Date(data * 1000).getHours(),
+      new Date(data * 1000).getMinutes(),
+      new Date(data * 1000).getSeconds()
+    ),
+    { includeSeconds: true }
+  );
+  return timeDiff;
+};
 
 const CovidLogList = ({ logData }) => {
   const classes = useStyles();
@@ -34,6 +64,10 @@ const CovidLogList = ({ logData }) => {
             data.update = data.update.replace(/\n/g, "<br/>");
             return (
               <Paper key={index} className={classes.logList}>
+                <Typography component="p" color="textSecondary">
+                  <AccessTimeIcon className={classes.timeIcon} />
+                  <strong>{`${getTimeDiff(data.timestamp)} ago`}</strong>
+                </Typography>
                 <Typography
                   component="p"
                   color="textSecondary"
