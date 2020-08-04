@@ -55,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
   },
   updateIcon: {
     position: "relative",
-    top: "5px"
-  }
+    top: "5px",
+  },
 }));
 
 const CovidCardDetail = ({
@@ -114,7 +114,7 @@ const CovidCardDetail = ({
             )}
             {lastUpdated && (
               <Typography component="p" color="textSecondary">
-                <UpdateIcon className={classes.updateIcon}/>{" "}
+                <UpdateIcon className={classes.updateIcon} />{" "}
                 <strong>{`${
                   lastUpdated.charAt(0).toUpperCase() + lastUpdated.slice(1)
                 } ago`}</strong>
@@ -128,15 +128,17 @@ const CovidCardDetail = ({
       <Divider />
 
       <CardContent className={classes.covidCardContent}>
-        <div className={classes.cardSwitch}>
-          <Switch
-            checked={showChart}
-            onChange={handleChange}
-            name="showChart"
-            color="primary"
-            inputProps={{ "aria-label": "secondary checkbox" }}
-          />
-        </div>
+        {active > 0 || recovered > 0 || deceased > 0 ? (
+          <div className={classes.cardSwitch}>
+            <Switch
+              checked={showChart}
+              onChange={handleChange}
+              name="showChart"
+              color="primary"
+              inputProps={{ "aria-label": "secondary checkbox" }}
+            />
+          </div>
+        ) : null}
 
         {!showChart ? (
           <React.Fragment>
