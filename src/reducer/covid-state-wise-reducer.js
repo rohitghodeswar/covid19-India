@@ -14,7 +14,17 @@ const covidStateWiseReducer = (state = initialState, action) => {
 
     case GET_COVID_STATEWISE_SUCCESS:
       const { statewise, tested } = action.payload;
-      return { ...state, stateWiseData: statewise, testData: tested };
+      let formattedStateWiseList = statewise.map((state) => {
+        if (state.active) {
+          state.active = Number(state.active);
+        }
+        return state;
+      });
+      return {
+        ...state,
+        stateWiseData: formattedStateWiseList,
+        testData: tested,
+      };
     default:
       return state;
   }

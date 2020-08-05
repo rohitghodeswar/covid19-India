@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import map from "lodash/map";
+import orderBy from "lodash/orderBy";
+import flattenDeep from "lodash/flattenDeep";
 
 import {
   fetchCovidDataAction,
@@ -10,7 +13,7 @@ import {
 //components
 import CovidSearchComponent from "../components/CovidSearchComponent";
 import CovidCardComponent from "../components/CovidCardComponent";
-import CovidAlertMessage from "../components/CovidAlertMessage";
+import CovidSortComponent from "../components/CovidSortComponent";
 import CovidDistrictCard from "../components/CovidDistrictCard";
 
 const CovidDistrictComponent = () => {
@@ -31,6 +34,12 @@ const CovidDistrictComponent = () => {
     dispatch(fetchCovidResourceAction());
     dispatch(fetchCovidZoneAction());
   }, [dispatch]);
+
+  let districtsList = map(covidData, (x) =>
+    orderBy(x.districtData, "active", "desc")
+  );
+  let deepArray = flattenDeep(districtsList);
+  const sortedDistricts = orderBy(deepArray, "active", "desc");
 
   return (
     <React.Fragment>
@@ -76,8 +85,8 @@ const CovidDistrictComponent = () => {
             zones={zones}
           />
         )}
-      {location && location.length > 0 && location[0].country !== "India" && (
-        <CovidAlertMessage />
+      {sortedDistricts && sortedDistricts.length > 0 && (
+        <CovidSortComponent sortedData={sortedDistricts} cardType="district"/>
       )}
     </React.Fragment>
   );

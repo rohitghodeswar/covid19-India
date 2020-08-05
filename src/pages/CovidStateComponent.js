@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import orderBy from "lodash/orderBy";
 
 //components
 import CovidSearchComponent from "../components/CovidSearchComponent";
 import CovidCardComponent from "../components/CovidCardComponent";
+import CovidSortComponent from "../components/CovidSortComponent";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -32,6 +34,9 @@ const CovidStateComponent = () => {
     dispatch(fetchCovidStateWiseAction());
     // eslint-disable-next-line
   }, [dispatch]);
+
+  const sortedStates = orderBy(stateWiseData, "active", "desc");
+
   return (
     <React.Fragment>
       {zones && zones.length > 0 && (
@@ -69,6 +74,9 @@ const CovidStateComponent = () => {
             cardType="state"
           />
         )}
+      {sortedStates && sortedStates.length > 0 && (
+        <CovidSortComponent sortedData={sortedStates} cardType="state" />
+      )}
     </React.Fragment>
   );
 };

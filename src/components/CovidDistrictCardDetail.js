@@ -8,7 +8,7 @@ const CovidDistrictCardDetail = ({
   resources,
   location,
 }) => {
-
+  
   return (
     <React.Fragment>
       {districtData &&
@@ -19,7 +19,7 @@ const CovidDistrictCardDetail = ({
           const categoryData =
             resources &&
             // eslint-disable-next-line
-            resources.filter((res) => { 
+            resources.filter((res) => {
               let city = location.city ? location.city : location.district;
               if (data.district === "Bengaluru Rural") {
                 city = "Bangalore";
