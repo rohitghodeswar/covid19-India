@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
     right: "10px",
     bottom: "10px",
   },
+  header: {
+    borderRadius: "10px 10px 0px 0px"
+  }
 }));
 
 const App = () => {
@@ -198,7 +201,7 @@ const App = () => {
         <Paper className={classes.rootPaper}>
           <Grid container className={classes.root}>
             <Grid item xs={12}>
-              <AppBar position="static">
+              <AppBar position="static" className={classes.header}>
                 <Toolbar>
                   <Typography className={classes.title} variant="h6" noWrap>
                     COVID-19 INDIA
