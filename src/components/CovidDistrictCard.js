@@ -1,17 +1,13 @@
 import React from "react";
 
 import CovidDistrictCardDetail from "./CovidDistrictCardDetail";
+import CovidLocationAlert from "./CovidLocationAlert";
 
-const CovidDistrictCard = ({
-  locationValue,
-  covidData,
-  resources,
-  zones,
-}) => {
+const CovidDistrictCard = ({ locationValue, covidData, resources, zones }) => {
   return (
     <React.Fragment>
       {locationValue &&
-        locationValue.map((location) => {
+        locationValue.map((location, index) => {
           const stateData = covidData.find(
             (data) => data.state.toLowerCase() === location.state.toLowerCase()
           );
@@ -33,13 +29,21 @@ const CovidDistrictCard = ({
             distData = districtData;
           }
 
-          return (
+          return distData && distData.length > 0 ? (
             <CovidDistrictCardDetail
               key={location}
               districtData={distData}
               zones={zones}
               resources={resources}
               location={location}
+            />
+          ) : (
+            <CovidLocationAlert
+              key={index}
+              isNotCity={true}
+              disAlert={true}
+              headerText="Alert"
+              bodyText="As per your current location we are not able to find your District or nearest City in Database."
             />
           );
         })}

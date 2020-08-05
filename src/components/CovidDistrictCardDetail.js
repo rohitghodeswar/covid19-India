@@ -20,7 +20,7 @@ const CovidDistrictCardDetail = ({
             resources &&
             // eslint-disable-next-line
             resources.filter((res) => { 
-              let city = location.district;
+              let city = location.city ? location.city : location.district;
               if (data.district === "Bengaluru Rural") {
                 city = "Bangalore";
               }
@@ -28,7 +28,7 @@ const CovidDistrictCardDetail = ({
                 city = "Bengaluru";
               }
 
-              if (res.city === city) {
+              if (city.includes(res.city)) {
                 return res.category;
               }
             });

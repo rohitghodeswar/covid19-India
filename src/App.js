@@ -111,9 +111,10 @@ const App = () => {
           const location = [
             {
               state: components.state,
-              district: components.city || components.state_district,
+              district: components.state_district || components.city ,
               country: components.country,
               state_code: components.state_code,
+              city: components.city
             },
           ];
           dispatch({
