@@ -85,9 +85,16 @@ const CovidDistrictComponent = () => {
             zones={zones}
           />
         )}
-      {sortedDistricts && sortedDistricts.length > 0 && (
-        <CovidSortComponent sortedData={sortedDistricts} cardType="district"/>
-      )}
+      {sortedDistricts &&
+        sortedDistricts.length > 0 &&
+        zones &&
+        zones.length > 0 && (
+          <CovidSortComponent
+            sortedData={sortedDistricts}
+            cardType="district"
+            zones={zones}
+          />
+        )}
     </React.Fragment>
   );
 };

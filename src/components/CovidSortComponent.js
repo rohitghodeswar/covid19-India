@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CovidSortComponent = ({ sortedData, cardType }) => {
+const CovidSortComponent = ({ sortedData, cardType, zones }) => {
   const classes = useStyles();
   const topFive =
     cardType === "state" ? sortedData.slice(0, 6) : sortedData.slice(0, 5);
@@ -59,6 +59,11 @@ const CovidSortComponent = ({ sortedData, cardType }) => {
               },
             };
             cardData = obj;
+          } else {
+            const zoneData = zones.find(
+              (zone) => zone.district === cardData[cardType]
+            );
+            cardData["zone"] = zoneData.zone;
           }
 
           if (cardData[cardType] !== "Total") {
