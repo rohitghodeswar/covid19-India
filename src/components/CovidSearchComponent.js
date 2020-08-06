@@ -41,7 +41,7 @@ const CovidSearchComponent = ({
 
     if (location && location.length > 0 && location[0].country === "India") {
       const filteredOptions = options.filter(
-        (data) => !location[0][cardType].includes(data.district)
+        (data) => !location[0][cardType].includes(data[cardType])
       );
       setOptions(filteredOptions);
     } else {
