@@ -60,7 +60,7 @@ const CovidLogList = ({ logData }) => {
       </Typography>
       {
         // eslint-disable-next-line
-        logData.reverse().map((data, index) => {
+        logData.map((data, index) => {
           const logTodayDate = new Date(data.timestamp * 1000).toDateString();
           const lastUpdated = getTimeDiff(data.timestamp);
 
