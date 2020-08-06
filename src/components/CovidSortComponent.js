@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CovidSortComponent = ({ sortedData, cardType }) => {
   const classes = useStyles();
-  const topFive = sortedData.slice(0, 5);
+  const topFive =
+    cardType === "state" ? sortedData.slice(0, 6) : sortedData.slice(0, 5);
 
   return (
     <div className={classes.root}>

@@ -11,7 +11,7 @@ const CovidDistrictCard = ({ locationValue, covidData, resources, zones }) => {
           const stateData = covidData.find(
             (data) => data.state.toLowerCase() === location.state.toLowerCase()
           );
-          let distData;
+          let distData = [];
           const districtData = stateData.districtData.filter((data) =>
             data.district
               .toLowerCase()
@@ -29,6 +29,17 @@ const CovidDistrictCard = ({ locationValue, covidData, resources, zones }) => {
             distData = districtData;
           }
 
+          if (distData && distData.length === 0) {
+            if (location.city) {
+              const districtData = stateData.districtData.filter((data) =>
+                data.district
+                  .toLowerCase()
+                  .includes(location.city.toLowerCase())
+              );
+              distData = districtData;
+            }
+          }
+          
           return distData && distData.length > 0 ? (
             <CovidDistrictCardDetail
               key={location}
