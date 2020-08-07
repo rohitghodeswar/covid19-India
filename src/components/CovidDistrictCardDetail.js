@@ -28,7 +28,7 @@ const CovidDistrictCardDetail = ({
                 city = "Bengaluru";
               }
 
-              if (city.includes(res.city)) {
+              if (city.includes(res.city) && res.city !== "") {
                 return res.category;
               }
             });
