@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   phoneNum: {
     marginBottom: "5px",
   },
+  cardTitle: {
+    fontSize: 18
+  }
 }));
 
 const CategoryCardDetails = ({ data, category }) => {
@@ -34,7 +37,7 @@ const CategoryCardDetails = ({ data, category }) => {
     <Card className={classes.root} variant="outlined">
       <CardHeader
         title={
-          <Typography component="p">
+          <Typography component="p" className={classes.cardTitle}>
             {category}
           </Typography>
         }
