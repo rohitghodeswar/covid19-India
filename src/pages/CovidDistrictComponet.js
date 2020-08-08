@@ -27,6 +27,7 @@ const CovidDistrictComponent = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(fetchCovidDataAction());
     dispatch(fetchCovidResourceAction());
     dispatch(fetchCovidZoneAction());

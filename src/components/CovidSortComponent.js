@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   sortTitle: {
-    margin: "10px 0"
+    margin: "10px 0",
+    fontSize: 18
   },
   formControl: {
     margin: 0,

@@ -37,9 +37,10 @@ const CovidCardComponent = ({
   cardType,
   zones,
 }) => {
+  let locValues = locationValue.map((data) => data);
   return (
     <React.Fragment>
-      {locationValue.reverse().map((location, index) => {
+      {locValues.reverse().map((location, index) => {
         let cardData;
         if (cardType === "state") {
           const stateData = covidData.find(

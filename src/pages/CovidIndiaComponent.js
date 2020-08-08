@@ -20,6 +20,7 @@ const CovidIndiaComponent = () => {
   const { logData } = useSelector((state) => state.covidLogReducer);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(fetchCovidStateWiseAction());
     dispatch(fetchLogAction());
   }, [dispatch]);

@@ -26,6 +26,7 @@ const CovidStateComponent = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (!resources || !zones) {
       dispatch(fetchCovidResourceAction());
       dispatch(fetchCovidZoneAction());
