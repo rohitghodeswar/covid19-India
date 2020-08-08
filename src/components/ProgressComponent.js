@@ -48,13 +48,17 @@ const ProgressComponent = ({
       <Typography component="p" color="textSecondary" gutterBottom>
         {labelText} -{" "}
         <strong>
-          <CountUp
-            formattingFn={(value) =>
-              new Intl.NumberFormat("en-IN").format(value)
-            }
-            end={Number(value)}
-          />{" "}
-        </strong>
+          {Number(value) > 0 ? (
+            <CountUp
+              formattingFn={(value) =>
+                new Intl.NumberFormat("en-IN").format(value)
+              }
+              end={Number(value)}
+            />
+          ) : (
+            0
+          )}
+        </strong>{" "}
         {delta > 0 && delta && (
           <React.Fragment>
             <span>(</span>

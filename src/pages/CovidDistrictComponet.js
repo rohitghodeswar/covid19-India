@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import map from "lodash/map";
-import orderBy from "lodash/orderBy";
-import flattenDeep from "lodash/flattenDeep";
 
 import {
   fetchCovidDataAction,
@@ -34,12 +31,6 @@ const CovidDistrictComponent = () => {
     dispatch(fetchCovidResourceAction());
     dispatch(fetchCovidZoneAction());
   }, [dispatch]);
-
-  let districtsList = map(covidData, (x) =>
-    orderBy(x.districtData, "active", "desc")
-  );
-  let deepArray = flattenDeep(districtsList);
-  const sortedDistricts = orderBy(deepArray, "active", "desc");
 
   return (
     <React.Fragment>
@@ -85,16 +76,13 @@ const CovidDistrictComponent = () => {
             zones={zones}
           />
         )}
-      {sortedDistricts &&
-        sortedDistricts.length > 0 &&
-        zones &&
-        zones.length > 0 && (
-          <CovidSortComponent
-            sortedData={sortedDistricts}
-            cardType="district"
-            zones={zones}
-          />
-        )}
+      {covidData && covidData.length > 0 && zones && zones.length > 0 && (
+        <CovidSortComponent
+          sortData={covidData}
+          cardType="district"
+          zones={zones}
+        />
+      )}
     </React.Fragment>
   );
 };

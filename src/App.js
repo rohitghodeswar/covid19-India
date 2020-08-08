@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
   rootPaper: {
     boxShadow: "none",
-    padding: "5px",
+    padding: "3px",
+    backgroundColor: "#f8f9fb"
   },
   search: {
     position: "relative",

@@ -34,9 +34,9 @@ const AccordionSummary = withStyles({
     backgroundColor: "rgba(0, 0, 0, .07)",
     borderBottom: "1px solid rgba(0, 0, 0, .125)",
     marginBottom: -1,
-    minHeight: 56,
+    minHeight: 48,
     "&$expanded": {
-      minHeight: 56,
+      minHeight: 48,
     },
   },
   content: {
@@ -49,15 +49,16 @@ const AccordionSummary = withStyles({
 
 const AccordionDetails = withStyles((theme) => ({
   root: {
-    padding: theme.spacing(2),
+    padding: "15px 10px",
+
   },
 }))(MuiAccordionDetails);
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
+    margin: 0,
     minWidth: "100%",
-  },
+  }
 }));
 
 const CategoryComponent = ({ categoryData, categoryOptions }) => {

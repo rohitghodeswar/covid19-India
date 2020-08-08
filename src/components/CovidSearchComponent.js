@@ -3,7 +3,6 @@ import { Paper, Grid } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 
 import { useSelector } from "react-redux";
 
@@ -12,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
     margin: "0px 0 10px 0",
   },
   searchPaper: {
-    padding: "15px",
-    borderRadius: "10px",
+    border: 0,
+    borderRadius: "5px",
     boxShadow:
       "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
   },
@@ -22,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     color: "slategray",
   },
+  searchText: {
+    "& .MuiAutocomplete-inputRoot": {
+      padding: "4px"
+    },
+  }
 }));
 
 const CovidSearchComponent = ({
@@ -54,14 +58,6 @@ const CovidSearchComponent = ({
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Paper variant="outlined" square className={classes.searchPaper}>
-            <Typography
-              component="h2"
-              className={classes.searchHeading}
-              gutterBottom
-            >
-              All {`${cardType.charAt(0).toUpperCase() + cardType.slice(1)}s`}{" "}
-              in India
-            </Typography>
             <Autocomplete
               multiple
               limitTags={4}
@@ -73,12 +69,13 @@ const CovidSearchComponent = ({
                 handleSearch(newValue);
               }}
               closeIcon={false}
+              className={classes.searchText}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   variant="outlined"
                   label={``}
-                  placeholder="Search here..."
+                  placeholder={`Search ${cardType}s here...`}
                 />
               )}
             />

@@ -15,8 +15,11 @@ const covidStateWiseReducer = (state = initialState, action) => {
     case GET_COVID_STATEWISE_SUCCESS:
       const { statewise, tested } = action.payload;
       let formattedStateWiseList = statewise.map((state) => {
-        if (state.active) {
+        if (state.active || state.confirmed) {
           state.active = Number(state.active);
+          state.confirmed = Number(state.confirmed);
+          state.deaths = Number(state.deaths)
+          state.recovered = Number(state.recovered)
         }
         return state;
       });

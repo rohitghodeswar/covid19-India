@@ -22,10 +22,11 @@ const useStyles = makeStyles((theme) => ({
     // maxWidth: 460,
     // margin: "0 auto",
     backgroundColor: theme.palette.background.paper,
-    borderRadius: 10,
+    borderRadius: 5,
+    border: 0,
     boxShadow:
       "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
-    marginBottom: "10px",
+    margin: "10px 0 !important",
   },
   title: {
     flexGrow: 1,
@@ -42,11 +43,14 @@ const useStyles = makeStyles((theme) => ({
     height: "10px",
   },
   cardHeader: {
-    padding: "10px 10px",
+    padding: "5px 10px",
   },
   covidCardContent: {
     position: "relative",
-    paddingTop: "18px",
+    padding: "10px 12px",
+    "&:last-child": {
+      paddingBottom: 15,
+    },
   },
   cardSwitch: {
     position: "absolute",
@@ -56,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
   updateIcon: {
     position: "relative",
     top: "5px",
+  },
+  cardTitle: {
+    fontSize: 20,
   },
 }));
 
@@ -92,7 +99,11 @@ const CovidCardDetail = ({
   return (
     <Card className={classes.root} variant="outlined">
       <CardHeader
-        title={title}
+        title={
+          <Typography component="h2" className={classes.cardTitle}>
+            {title}
+          </Typography>
+        }
         subheader={
           <React.Fragment>
             Total Cases -{" "}

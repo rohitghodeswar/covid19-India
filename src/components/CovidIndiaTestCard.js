@@ -10,9 +10,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginBottom: "10px",
     backgroundColor: theme.palette.background.paper,
-    borderRadius: 10,
+    borderRadius: 5,
     boxShadow:
       "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+      "& .MuiCardContent-root": {
+        padding: 12
+      }
   },
 }));
 
@@ -71,12 +74,12 @@ const CovidIndiaTestCard = ({ covidTestData }) => {
             </strong>
           </Typography>
           {testData.source && (
-          <Typography component="p" color="textSecondary">
-            <a href={testData.source} target="blank">
-              Source
-            </a>
-          </Typography>
-        )}
+            <Typography component="p" color="textSecondary">
+              <a href={testData.source} target="blank">
+                Source
+              </a>
+            </Typography>
+          )}
         </React.Fragment>
       </CardContent>
     </Card>

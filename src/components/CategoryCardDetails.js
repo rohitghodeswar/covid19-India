@@ -33,7 +33,11 @@ const CategoryCardDetails = ({ data, category }) => {
   return (
     <Card className={classes.root} variant="outlined">
       <CardHeader
-        title={category}
+        title={
+          <Typography component="p">
+            {category}
+          </Typography>
+        }
         subheader={
           <React.Fragment>
             <Typography component="p" color="textSecondary">
