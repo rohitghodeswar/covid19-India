@@ -58,6 +58,7 @@ const CovidCardComponent = ({
             recovered: stateData.recovered,
             [cardType]: location.state,
             lastUpdated: timeDiff,
+            notes: stateData.statenotes,
             delta: {
               confirmed: stateData.deltaconfirmed,
               deceased: stateData.deltadeaths,
@@ -134,6 +135,8 @@ const CovidCardComponent = ({
             categoryOptions={categoryOptions}
             zone={cardData.zone}
             lastUpdated={cardData.lastUpdated}
+            isInState={cardType === "state" ? true : false}
+            notes={cardData.notes}
           />
         );
       })}

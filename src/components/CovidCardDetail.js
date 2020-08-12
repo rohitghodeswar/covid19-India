@@ -9,12 +9,19 @@ import Switch from "@material-ui/core/Switch";
 import Typography from "@material-ui/core/Typography";
 import UpdateIcon from "@material-ui/icons/Update";
 
+import InfoIcon from "@material-ui/icons/Info";
+import IconButton from "@material-ui/core/IconButton";
+import Alert from '@material-ui/lab/Alert';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
+
 import CountUp from "react-countup";
 import { Doughnut } from "react-chartjs-2";
 
 // component
 import ProgressComponent from "./ProgressComponent";
 import CategoryComponent from "./CategoryComponent";
+import CovidStateDistrictDetail from "./CovidStateDistrictDetail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +59,17 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: 15,
     },
   },
+  noteIcon: {
+    position: "absolute",
+    top: "-2px",
+    right: 50,
+  },
+  alertInfo: {
+    margin: "30px 0px 15px"
+  },
+  infoIcon: {
+    fontSize: 20,
+  },
   cardSwitch: {
     position: "absolute",
     top: "0px",
@@ -77,6 +95,8 @@ const CovidCardDetail = ({
   categoryOptions,
   zone,
   lastUpdated,
+  notes,
+  isInState,
 }) => {
   const classes = useStyles();
   const data = {
@@ -91,9 +111,14 @@ const CovidCardDetail = ({
   };
 
   const [showChart, setShowChart] = React.useState(false);
+  const [showInfo, setShowInfo] = React.useState(false);
 
   const handleChange = (event) => {
     setShowChart(!showChart);
+  };
+
+  const onClickInfo = () => {
+    setShowInfo(!showInfo);
   };
 
   return (
@@ -139,6 +164,16 @@ const CovidCardDetail = ({
       <Divider />
 
       <CardContent className={classes.covidCardContent}>
+        {!!notes && (
+          <IconButton
+            onClick={onClickInfo}
+            className={classes.noteIcon}
+            aria-label="info"
+          >
+            <InfoIcon className={classes.infoIcon} />
+          </IconButton>
+        )}
+
         {active > 0 || recovered > 0 || deceased > 0 ? (
           <div className={classes.cardSwitch}>
             <Switch
@@ -150,6 +185,32 @@ const CovidCardDetail = ({
             />
           </div>
         ) : null}
+
+        {showInfo && (
+          <Collapse in={showInfo} 
+          className={classes.alertInfo}
+          
+          >
+            <Alert
+             severity="info"
+             icon={false}
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="primary"
+                  size="small"
+                  onClick={() => {
+                    setShowInfo(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              {notes}
+            </Alert>
+          </Collapse>
+        )}
 
         {!showChart ? (
           <React.Fragment>
@@ -187,6 +248,12 @@ const CovidCardDetail = ({
           categoryData={categoryData}
           categoryOptions={categoryOptions}
         />
+      )}
+      {isInState && (
+        <React.Fragment>
+          <Divider />
+          <CovidStateDistrictDetail stateName={title} />
+        </React.Fragment>
       )}
     </Card>
   );

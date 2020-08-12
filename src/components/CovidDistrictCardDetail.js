@@ -8,7 +8,6 @@ const CovidDistrictCardDetail = ({
   resources,
   location,
 }) => {
-  
   return (
     <React.Fragment>
       {districtData &&
@@ -53,6 +52,7 @@ const CovidDistrictCardDetail = ({
               categoryOptions={categoryOptions}
               zone={zoneData.zone}
               key={data.district}
+              notes={data.notes}
             />
           );
         })}

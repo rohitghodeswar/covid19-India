@@ -155,6 +155,7 @@ const CovidSortComponent = ({ sortData, cardType, zones }) => {
                 deceased: cardData.deltadeaths,
                 recovered: cardData.deltarecovered,
               },
+              notes: cardData.statenotes
             };
             cardData = obj;
           } else {
@@ -174,7 +175,7 @@ const CovidSortComponent = ({ sortData, cardType, zones }) => {
               delta={cardData.delta}
               key={index}
               zone={cardData.zone}
-              lastUpdated={cardData.lastUpdated}
+              notes={cardData.notes}
             />
           );
         })}
